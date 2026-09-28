@@ -1,0 +1,12 @@
+1. Hacer fork del repositorio base.
+2. Reemplazar notebook.py y README.md por estos archivos.
+3. No modificar data/payments.jsonl ni los tests provistos.
+4. Ejecutar:
+   uv sync --frozen
+   uv run pytest
+   uv run ruff check notebook.py
+   uv run marimo check --strict notebook.py
+5. Si todo queda verde, hacer commit y push.
+6. Entregar solamente el enlace público del repositorio.
+
+Opcional: agregar .github/workflows/tests.yml para ejecutar las validaciones en GitHub Actions.
