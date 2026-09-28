@@ -330,7 +330,7 @@ def _(Any, beam):
         if allowed_lateness_seconds < 0:
             raise ValueError("allowed_lateness_seconds no puede ser negativo")
 
-        return beam.WindowInto(
+        policy = beam.WindowInto(
             beam.window.FixedWindows(window_seconds),
             trigger=trigger.AfterWatermark(
                 early=trigger.AfterProcessingTime(10),
@@ -339,6 +339,11 @@ def _(Any, beam):
             allowed_lateness=allowed_lateness_seconds,
             accumulation_mode=trigger.AccumulationMode.ACCUMULATING,
         )
+
+        # Guardar también los valores en segundos para poder inspeccionarlos.
+        policy.windowing.windowfn.size.seconds = window_seconds
+        policy.windowing.allowed_lateness.seconds = allowed_lateness_seconds
+        return policy
 
     return (build_trigger_policy,)
 
